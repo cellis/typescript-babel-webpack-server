@@ -1,4 +1,4 @@
-export default () => {
+export default (): void => {
   // 1. Print empty lines until the screen is blank.
   process.stdout.write('\x1b[2J');
 

@@ -13,7 +13,7 @@ const chirp = (note: string): void => {
 };
 
 app.get('/api', (req, res) => {
-  console.log('yo');
+  console.log('yoo');
   res.send(mockResponse);
 });
 app.get('/', (req, res) => {
