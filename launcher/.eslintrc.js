@@ -8,6 +8,14 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking'
   ],
+
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts']
+      }
+    }
+  },
   parserOptions: {
     project: path.resolve(__dirname, './tsconfig.json'),
     tsconfigRootDir: __dirname,

@@ -4,16 +4,25 @@
     "run": "nodemon build/main.js",
     "start": "node build",
     "build": "webpack --mode production",
-    "dev": "webpack --watch --mode development"
+    "dev": "webpack --watch --mode development",
+    "develop": "ts-node --dir ./launcher index.ts"
   },
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@types/express": "^4.17.1",
-    "@types/node": "^12.7.5",
-    "@typescript-eslint/eslint-plugin": "^2.2.0",
-    "@typescript-eslint/parser": "^2.2.0",
+    "@types/webpack": "^4.41.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/is-running": "^2.1.0",
+    "@types/node": "^12.12.14",
+    "@types/yargs": "^13.0.3",
+    "@typescript-eslint/eslint-plugin": "^2.9.0",
+    "@typescript-eslint/parser": "^2.9.0",
+    "babel-eslint": "^10.0.3",
+    "colors": "^1.4.0",
     "concurrently": "^4.1.2",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.3.0",
@@ -21,14 +30,16 @@
     "eslint-loader": "^3.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.17.0",
-    "express": "^4.17.1",
+    "is-running": "^2.1.0",
     "nodemon-webpack-plugin": "^4.1.1",
-    "ts-loader": "^6.1.0",
+    "port-pid": "^0.0.7",
+    "readline": "^1.3.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.5.4",
     "typescript": "^3.6.3",
     "webpack": "^4.39.3",
-    "webpack-node-externals": "^1.7.2"
-  },
-  "devDependencies": {
-    "webpack-cli": "^3.3.8"
+    "webpack-cli": "^3.3.8",
+    "webpack-node-externals": "^1.7.2",
+    "yargs": "^15.0.2"
   }
 }

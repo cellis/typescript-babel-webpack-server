@@ -1,7 +1,8 @@
 import express from 'express';
 
+console.log(process.env.DEBUG, '<< process.env.DEBUG');
 const app = express();
-const port = process.env.PORT || 3555;
+const port = process.env.PORT || 8000;
 const mockResponse = {
   foo: 'bar',
   bar: 'foo',

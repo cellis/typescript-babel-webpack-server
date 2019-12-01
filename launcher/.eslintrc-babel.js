@@ -1,18 +1,13 @@
 const path = require('path');
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'jest', 'import'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking'
-  ],
-  parserOptions: {
-    project: path.resolve(__dirname, './tsconfig.json'),
-    tsconfigRootDir: __dirname,
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module' // Allows for the use of imports},
+  parser: 'babel-eslint',
+  extends: ['eslint:recommended'],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js']
+      }
+    }
   },
   env: {
     'jest/globals': true,
@@ -20,7 +15,6 @@ module.exports = {
   },
   rules: {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    '@typescript-eslint/no-explicit-any': 'off',
     'object-shorthand': [2, 'always'],
     'object-curly-spacing': [2, 'always'],
     'object-literal-sort-keys': 'off',
@@ -37,7 +31,6 @@ module.exports = {
     'comma-dangle': [2, 'always-multiline'],
     quotes: ['error', 'single'],
     semi: 2,
-    'import/no-unresolved': 'error',
-    '@typescript-eslint/restrict-plus-operands': 'error'
+    'import/no-unresolved': 'error'
   }
 };
