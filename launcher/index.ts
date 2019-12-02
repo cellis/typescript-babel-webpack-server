@@ -40,7 +40,7 @@ function tryClear(): void {
 
 const options: any = webpackOptions;
 const compiler = webpack(options());
-const instructions = 'Press: s = stop debugging, r = run jest, d = debug\n';
+const instructions = 's = stop debugging, d = debug\n';
 
 const setupEnv = (): void => {
   env = {};
