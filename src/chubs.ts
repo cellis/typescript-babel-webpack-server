@@ -1,3 +1,3 @@
 export default () => {
-  console.log('chubssy');
+  console.log('\ncool\n');
 };

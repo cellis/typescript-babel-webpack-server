@@ -14,7 +14,7 @@ module.exports = (env = {}) => {
     externals: [nodeExternals()],
     devtool: 'inline-source-map',
     stats: 'errors-only',
-    bail: true,
+    // bail: true,
     resolve: {
       extensions: ['.ts', '.js', '.json']
     },
@@ -30,9 +30,16 @@ module.exports = (env = {}) => {
           use: [
             {
               loader: 'ts-loader'
-            },
-            'eslint-loader'
+            }
           ]
+        },
+        {
+          test: /\.(js|ts)$/,
+          exclude: /node_modules/,
+          loader: 'eslint-loader',
+          options: {
+            failOnError: true
+          }
         }
       ]
     }
