@@ -1,33 +1,44 @@
 import nodemon from 'nodemon';
 import webpack from 'webpack';
-import webpackOptions from './webpack.config';
+// @ts-ignore
+import webpackOptions from '../webpack.config';
 
-const monitor = nodemon({
-  script: '../build/index.js',
-});
+let monitor: typeof nodemon;
 
-const compiler = webpack(webpackOptions());
+const options: any = webpackOptions;
+const compiler = webpack(options());
+
+const startMonitoring = (): void => {
+  monitor = nodemon({
+    script: '../build/index.js',
+    watch: ['db/schema.sql'],
+  });
+
+  monitor.on('log', ({ colour }) => {
+    console.log(colour);
+  });
+
+  process.on('exit', () => {
+    monitor.emit('exit');
+  });
+};
 
 compiler.watch(
   {
-    aggregateTimeout: 300,
+    // aggregateTimeout: 300,
   },
-  (err, stats) => {
+  err => {
     if (err) {
       console.log(err, '<< err');
     } else {
-      monitor.emit('restart');
+      if (!monitor) {
+        startMonitoring();
+      } else {
+        monitor.emit('restart');
+      }
     }
   }
 );
-
-monitor.on('log', ({ colour }) => {
-  console.log(colour);
-});
-
-process.on('exit', () => {
-  monitor.emit('exit');
-});
 
 process.once('SIGINT', () => {
   process.exit(0);

@@ -1,1 +1,1 @@
-declare module 'webpack.config'
+declare module 'port-pid';

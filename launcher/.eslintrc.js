@@ -46,6 +46,7 @@ module.exports = {
     quotes: ['error', 'single'],
     semi: 2,
     'import/no-unresolved': 'error',
-    '@typescript-eslint/restrict-plus-operands': 'error'
+    '@typescript-eslint/restrict-plus-operands': 'error',
+    '@typescript-eslint/ban-ts-ignore': 'off'
   }
 };
