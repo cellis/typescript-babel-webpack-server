@@ -15,7 +15,6 @@ let enteringDebugKeysMode = false;
 let debugKeyBuffer: string;
 let ipAddress: string;
 let shouldRestart = false;
-let wasBroken = false;
 let env: any = {};
 
 const { argv } = yargs
@@ -88,6 +87,11 @@ const startMonitoring = (): void => {
 
   monitor.on('start', () => {
     tryClear();
+    notifier.notify({
+      title: pkg.name,
+      message: 'Compilation succeeded',
+      icon: resolve(__dirname, './green.png'),
+    });
     console.log(instructions);
   });
 
@@ -118,22 +122,12 @@ const startApp = (): void => {
         } else if (monitor) {
           monitor.restart();
         }
-
-        if (wasBroken) {
-          wasBroken = false;
-          notifier.notify({
-            title: `Successful build of ${pkg.name}!`,
-            message: `Build fixed in ${pkg.name}`,
-            icon: resolve(__dirname, './green.png'),
-          });
-        }
       } else {
-        wasBroken = true;
         console.log(stats.compilation.errors.map(er => er.message).join('\n'));
 
         notifier.notify({
-          title: `Error in ${pkg.name}`,
-          message: 'See terminal for details',
+          title: pkg.name,
+          message: 'Compilation failed. See terminal for details.',
           icon: resolve(__dirname, './red.png'),
         });
       }
