@@ -149,7 +149,7 @@ const startApp = (): void => {
           notifier.notify({
             // type: 'error',
             title: `Error in ${pkg.name}`,
-            message: err.message.toString(),
+            message: 'See terminal for details',
             icon: resolve(__dirname, './red.png'),
           });
         }
