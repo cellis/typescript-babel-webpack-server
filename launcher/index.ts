@@ -83,13 +83,8 @@ const startMonitoring = (): void => {
   monitor = nodemon({
     script: '../build/index.js',
     watch: ['db/schema.sql'],
-    // quiet: true,
     env,
   });
-
-  // monitor.on('log', ({ colour }) => {
-  //   console.log(colour);
-  // });
 
   monitor.on('start', () => {
     tryClear();
@@ -98,7 +93,6 @@ const startMonitoring = (): void => {
 
   monitor.on('exit', () => {
     if (shouldRestart) {
-      console.log('Restarting for environment variables');
       startMonitoring();
     }
   });
@@ -114,48 +108,37 @@ const startApp = (): void => {
 
   env = {};
 
-  compiler.watch(
-    {
-      // aggregateTimeout: 300,
-    },
-    (err, stats) => {
-      if (err) {
-        console.log(err, '<< err');
-      } else {
-        if (!stats.compilation.errors.length) {
-          // console.log(stats);
-          if (!monitor) {
-            startMonitoring();
-          } else if (monitor) {
-            monitor.restart();
-          }
+  compiler.watch({}, (err, stats) => {
+    if (err) {
+      console.log(err, '<< err');
+    } else {
+      if (!stats.compilation.errors.length) {
+        if (!monitor) {
+          startMonitoring();
+        } else if (monitor) {
+          monitor.restart();
+        }
 
-          if (wasBroken) {
-            wasBroken = false;
-            notifier.notify({
-              title: `Successful build of ${pkg.name}!`,
-              message: `Build fixed in ${pkg.name}`,
-              icon: resolve(__dirname, './green.png'),
-            });
-          }
-        } else {
-          wasBroken = true;
-          console.log(
-            stats.compilation.errors.map(er => er.message).join('\n')
-          );
-
-          const err = stats.compilation.errors[0];
-
+        if (wasBroken) {
+          wasBroken = false;
           notifier.notify({
-            // type: 'error',
-            title: `Error in ${pkg.name}`,
-            message: 'See terminal for details',
-            icon: resolve(__dirname, './red.png'),
+            title: `Successful build of ${pkg.name}!`,
+            message: `Build fixed in ${pkg.name}`,
+            icon: resolve(__dirname, './green.png'),
           });
         }
+      } else {
+        wasBroken = true;
+        console.log(stats.compilation.errors.map(er => er.message).join('\n'));
+
+        notifier.notify({
+          title: `Error in ${pkg.name}`,
+          message: 'See terminal for details',
+          icon: resolve(__dirname, './red.png'),
+        });
       }
     }
-  );
+  });
 };
 
 const killAndRestart = (): void => {
@@ -196,7 +179,6 @@ process.stdin.on('keypress', (str, key) => {
     if (debugKeyBuffer.length > 0) {
       tryClear();
 
-      // console.log(`Debugging with DEBUG=${debugKeyBuffer}`);
       enteringDebugKeysMode = false;
 
       setupEnv();
